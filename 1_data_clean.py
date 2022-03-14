@@ -15,7 +15,7 @@ for file in os.listdir(data_path):
         continue
     print(file)
     data = pd.read_csv(file_path, low_memory=False, lineterminator="\n")
-#delete the unused information 
+#remove the unused information 
     data = data.drop(['id_str', 'source', 'truncated', 'in_reply_to_status_id', 'in_reply_to_status_id_str',
                       'in_reply_to_user_id', 'in_reply_to_user_id_str', 'in_reply_to_screen_name',
                       'quoted_status_id', 'quoted_status_id_str', 'is_quote_status', 'retweeted_status',
@@ -23,7 +23,7 @@ for file in os.listdir(data_path):
                       'filter_level', 'lang', 'matching_rules', 'current_user_retweet', 'scopes',
                       'withheld_copyright', 'withheld_in_countries', 'withheld_scope',
                       'contributors', 'display_text_range', 'quoted_status_permalink\r'], axis=1)  # step1:删除不需要的列
-#remove the tweets with URLs
+#remove the tweets containing URLs
     data = data.loc[-data['full_text'].str.contains('http', na=False)]
 #select the tweets containing keywords
     data = data.loc[data['full_text'].str.contains(
