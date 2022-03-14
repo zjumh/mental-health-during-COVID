@@ -10,7 +10,7 @@ from gensim.models.phrases import Phrases, Phraser
 from ast import literal_eval
 # the number of "stop words"
 print("Stop words: ", len(STOPWORDS))
-file_path = '/data_8t/lmh_total/model_merge/mental.csv'
+file_path = '/data_8t/lmh_total/model3/mental.csv'
 df = pd.read_csv(file_path, keep_default_na=False, lineterminator='\n')
 # remove @ handlers and lower texts
 print(len(df))
