@@ -2,10 +2,10 @@ import os
 import pandas as pd
 import numpy as np
 import re
-data_path = '/data_8t/COVIDTweets/drug_tweets'
+data_path = '/data_8t/COVIDTweets/data_clean'
 re_path = '/data_8t/lmh_total/drug/count'
-write_path1 = '/data_8t/lmh_total/drug/clean_place/'
-write_path2 = '/data_8t/lmh_total/drug/count/'
+write_path1 = '/data_8t/lmh_total/mental_place/clean_place/'
+write_path2 = '/data_8t/lmh_total/mental_place/count/'
 name =[]
 for file in os.listdir(re_path):
     name.append(file)
