@@ -1,14 +1,8 @@
 import os
-# import wget
 from datetime import datetime
-# from dateutils import timedelta
-# import itertools
 import pandas as pd
 import numpy as np
-# import math
 from pathlib import Path
-# import regex as re
-# from functools import reduce
 from ast import literal_eval
 from pprint import pprint
 import gensim
@@ -96,6 +90,6 @@ def topic_modeling(num_topics=5):
         print('saving error: {}'.format(e))
     print("----------------", "\n")
 
-n_topics = [6,7,8,9, 10, 11, 12, 13,14,15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+n_topics = [6, 7 , 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 for num_topics in n_topics:
     topic_modeling(num_topics=num_topics)

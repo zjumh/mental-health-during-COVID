@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 import os
+
 # Full name of 50 states
 full_name = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida',
              'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
@@ -9,12 +10,13 @@ full_name = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado
              'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
              'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 # Abbreviation of 50 states
-nf_name = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA',
+abbr_name = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA',
            'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
            'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+
 nf_name1 = [' '+str(i) for i in nf_name]
 nf_name2 = [str(i)+',' for i in nf_name]
-state_f = full_name+nf_name2+nf_name1
+state_f = full_name + abbr_name2 + nf_name1
 state_keywords = "|".join(state_f)
 dict1 = dict(zip(full_name,full_name))
 dict2 = dict(zip(nf_name1,full_name))
@@ -32,6 +34,7 @@ def state_dup(x,keywords):
         result = list(set(state_list_new))
         if len(result)==1: return(result[0])
         else: return ''
+
 # Get the geo information
 def state(data):
     data['place_info'] = data['place'].apply(lambda x: eval(str(x)).get('full_name') if str(x) != 'nan' else '')
@@ -42,12 +45,9 @@ def state(data):
     data1 = data.drop(['place_info', 'location_info'],axis=1)
     return data1
 
-# Filter the mental health related tweets
-def mental(data):
-    prefix = "( |,|;|\.|\!|^)"
-    suffix = "( |,|;|\.|\!|$)"
-    pattern_keywords_negative = "(no|not|n't|n’t|non|than|neither|nor|instead of)"
-    mental_pattern = {
+
+
+mental_pattern = {
         'anxiety': "(anxiety|anxious|antsy|restlessness|concern about the future|concerned about the future|concerning about the future|"
                    "dread fear|nervousness|panic|panic attacks|paranoia|worry|worried|worrying)",
         'depression': "(collapse|anger|compassion|shame|depressed|escape|loneliness|darkness|sensitivity|lupus|autism|jealousy|paranoia|"
@@ -84,6 +84,13 @@ def mental(data):
                  "gambling-related cognitive distortion|uncontrolled gambling|compulsive gambling|internet addiction|"
                  "problematic use|problematic phone use|social media addiction|addiction)"
     }
+
+# Filter mental health related tweets
+def mental(data):
+    prefix = "( |,|;|\.|\!|^)"
+    suffix = "( |,|;|\.|\!|$)"
+    pattern_keywords_negative = "(no|not|n't|n’t|non|than|neither|nor|instead of)"
+    
     for status, pattern in mental_pattern.items():
         neg_pattern = pattern_keywords_negative + " (\w+\s){0,3}" + pattern+suffix
         data[status] = (data['full_text'].str.contains(prefix + pattern + suffix, na=False, case=False) ^ data['full_text'].str.contains(neg_pattern, na=False, case=False))

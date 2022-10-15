@@ -37,6 +37,7 @@ for i in range(0,len(doc_topic)):
     if len(c[0])==1:
         topic.append(t[0][0])
         p.append(t[0][1])
+        
 # If the probability that the tweet belongs to each topic is the same,
     # then it is not counted in the subsequent processing
     elif m == n:

@@ -5,7 +5,6 @@ from scipy import stats
 
 data = pd.read_csv("D:/research/COVID/text/result/count/count7D.csv")
 
-
 def symptom_statistic(symptom):
     print(symptom)
     p = data[f'P{symptom}_p'].to_list()
@@ -21,7 +20,6 @@ def symptom_statistic(symptom):
     # abnormal distribution,rank test
     print(stats.wilcoxon(p, m, zero_method='wilcox', correction=False))
     print(stats.ttest_rel(p, m))
-
 
 symptom_list = ['anxiety', 'depression', 'insomnia', 'abuse']
 for i in symptom_list:
